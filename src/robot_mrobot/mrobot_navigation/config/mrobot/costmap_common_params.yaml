@@ -1,0 +1,10 @@
+obstacle_range: 2.5     # 更新以机器人为中心，按此数值为半径内的障碍物信息
+raytrace_range: 3.0     # 更新以机器人为中心，按此数值为半径内的自由空间
+#footprint: [[0.465,0.3495],[0.465,-0.3495],[-0.465,-0.3495],[-0.465,0.3495]]
+footprint: [[0.49,0.3725],[0.49,-0.3725],[-0.49,-0.3725],[-0.49,0.3725]]
+#robot_radius: 0.165     # 机器人的外形半径
+inflation_radius: 0.4   # 与障碍物的最小安全距离
+max_obstacle_height: 0.2  # 传感器读数的最大有效高度(m)，通常设置为略高于机器人的实际高度
+min_obstacle_height: 0.0  # 传感器读数的最小有效高度(m)
+observation_sources: scan    # 需要订阅的传感器信息
+scan: {data_type: LaserScan, topic: /scan, marking: true, clearing: true, expected_update_rate: 0}  # 传感器消息类型和话题名称

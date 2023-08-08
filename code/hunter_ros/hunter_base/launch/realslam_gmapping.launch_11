@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 
+        The robot can be controlled either through CAN bus or UART port. Make sure the hardware
+        interface is set up correctly before attempting to connect to the robot.
+        
+        You only need to specify the port name, such as "can0", "/dev/ttyUSB0". The port should 
+        operate with the following configuration:
+        
+        * CAN bus: 500k
+        * UART: 115200, Parity None, 8-bit Data, 1 Stop Bit 
+    -->
+    <param name="use_sim_time" value="false"/>
+    <arg name="port_name" default="can0" />
+    <arg name="simulated_robot" default="false" />
+    <arg name="publish_tf" default="true" />
+
+    <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
+        <param name="port_name" type="string" value="$(arg port_name)" />
+        <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
+        <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="hunter_base_link" />
+    </node>
+    
+    <!-- 运行激光雷达驱动 -->
+    <include file="$(find rslidar_sdk)/launch/rslidar_32.launch"/>	
+
+    <!-- 运行3D点云数据转2D激光数据 -->
+    <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan.launch"/>
+
+    <!--运行在线建图程序 -->
+    <include file="$(find laser_scan_matcher)/launch/realtime_gmapping.launch"/>
+    
+
+</launch>

@@ -1,0 +1,16 @@
+<launch>
+    <param name="use_sim_time" value="false" />
+
+    <!-- 运行move_base节点 -->
+    <include file="$(find mrobot_navigation)/launch/move_base.launch" />
+
+    <!-- 启动AMCL节点 -->
+    <include file="$(find mrobot_navigation)/launch/amcl.launch" />
+
+    <!--  **************** Visualisation ****************  -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
+    <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="log" />
+    <node name="pure_pursuit" pkg="pp" type="ppp" output="log"/>
+
+
+</launch>

@@ -1,0 +1,34 @@
+
+#---standard pioneer footprint---
+#---(in meters)---
+#footprint: [ [0.254, -0.0508], [0.1778, -0.0508], [0.1778, -0.1778], [-0.1905, -0.1778], [-0.254, 0], [-0.1905, 0.1778], [0.1778, 0.1778], [0.1778, 0.0508], [0.254, 0.0508] ]
+footprint: [ [-0.1,-0.1], [0.1,-0.1], [0.1,0.1], [-0.1,0.1] ]
+#footprint: [ [-0.18,-0.35], [0.82,-0.35], [0.82,0.35], [-0.18,0.35] ]
+#footprint: [[0.49,0.3725],[0.49,-0.3725],[-0.49,-0.3725],[-0.49,0.3725]]
+
+
+transform_tolerance: 0.2
+#map_type: costmap
+
+obstacle_layer:
+ enabled: true
+ max_obstacle_height: 0.4
+ min_obstacle_height: 0.0
+ obstacle_range: 2.0
+ raytrace_range: 3.0
+ inflation_radius: 0.2
+ track_unknown_space: false
+ combination_method: 1
+
+ observation_sources: scan
+ #laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+ scan: {data_type: LaserScan, topic: /scan, marking: true, clearing: true, expected_update_rate: 0}  # 传感器消息类型和话题名称
+
+inflation_layer:
+  enabled:              true
+  cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius:     0.1  # max. distance from an obstacle at which costs are incurred for planning paths.
+
+static_layer:
+  enabled:              true
+  map_topic:            "/map"

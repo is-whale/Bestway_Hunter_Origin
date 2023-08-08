@@ -1,0 +1,16 @@
+tolerance: 0.05
+max_linear_velocity: 0.1
+max_angular_velocity: 0.5
+look_ahead: 0.2
+angle_to_velocity: 2.0
+skip_sensor_dist: 0.06
+avoid_distance_front: 0.2
+avoid_distance_side: 0.14
+approx_iterations: 10
+stop_at_target: true
+path: "/followingpath"
+scan: "/scan"
+cmd_vel: "/cml_vel"
+path_frame: "/map"
+robot_frame: "/base_link"
+odom_frame: "/odom"

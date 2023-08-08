@@ -1,0 +1,19 @@
+local_costmap:
+   global_frame: odom
+   robot_base_frame: base_link
+   update_frequency: 3.0
+   publish_frequency: 1.0
+   #static_map: false
+   rolling_window: false
+   width: .6     # 代价地图长，单位m
+   height: 6    # 代价地图高，单位m
+   resolution: 0.01             # 代价地图分辨率 
+   transform_tolerance: 1.0     # 坐标变换TF的容许误差
+   #map_type: costmap 
+
+   plugins:
+   - {name: static_layer,        type: "costmap_2d::StaticLayer"}
+   - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+     #- {name: grid_layer,          type: "simple_layer_namespace::GridLayer"}
+   - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+

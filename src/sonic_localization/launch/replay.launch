@@ -1,0 +1,9 @@
+<launch>
+    <arg name="ws_path" default="/root/catkin_ws" />
+    <arg name="bag_filename" default="$(arg ws_path)/bagfile/hunter.bag" />
+    <param name="ws_path" type="string" value="$(arg ws_path)"/>
+
+    <node pkg="rosbag" type="play" name="rosbag_play" args="--pause  $(arg bag_filename)">
+	<remap from="odom" to="path_odom"/>
+    </node>
+</launch>

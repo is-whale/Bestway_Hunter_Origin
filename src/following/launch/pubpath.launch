@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- 运行轨迹转换程序，发布global_plan轨迹主题 -->
+	<!--node pkg="following" type="pubpath" name="pathpub" output="screen"/-->
+	<node pkg="following" type="pubpath.py" name="pubpath" output="screen">
+		<remap from="followingpath" to="stable_local"/>
+	</node>
+</launch>

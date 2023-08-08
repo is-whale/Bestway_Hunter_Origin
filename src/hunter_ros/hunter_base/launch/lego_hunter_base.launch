@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="/use_sim_time" value="false"/>
+    <arg name="simulated_robot" default="false" />
+    <arg name="control_rate" default="50" />
+    <arg name="publish_tf" default="true" />
+
+    <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
+        <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
+        <param name="control_rate" type="int" value="$(arg control_rate)" />
+        <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="base_link" />
+    </node>
+</launch>

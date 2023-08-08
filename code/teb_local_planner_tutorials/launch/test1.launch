@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- 
+  Simulate a carlike robot with the teb_local_planner in stage:
+  - stage
+  - map_server
+  - move_base
+  - static map
+  - amcl
+  - rviz view
+ -->
+<launch>
+    	<!--  ************** Navigation ***************  -->
+     	<include file="$(find following)/launch/pubpath.launch"/>
+	<!--  ****** Maps *****  -->
+
+	<!--  **************** Visualisation ****************  -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_test.rviz" output="log"/>
+</launch>
+

@@ -1,0 +1,8 @@
+<launch>
+    <arg name="ws_path" default="$(find sonic_localization)" />
+    <param name="ws_path" type="string" value="$(arg ws_path)"/>
+
+    <rosparam command="load" file="$(find sonic_localization)/config/localization.yaml" />
+    <node pkg="sonic_localization" type="localization" name="localization" output="log"/>
+
+</launch>

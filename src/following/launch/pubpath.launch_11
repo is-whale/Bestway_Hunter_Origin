@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- rosbag播放轨迹文件 -->
+	<param name="/use_sim_time" value="true" />
+	<arg name="bag_filename" default="/root/catkin_ws/bagfile/hunter.bag"/>
+	<node pkg="rosbag" type="play" name="rosbag_play" args="--clock  $(arg bag_filename) --topics /odom">
+		<remap from="odom" to="path_odom"/>
+	</node>
+	
+
+	<!-- 运行轨迹转换程序，发布global_plan轨迹主题 -->
+	<node pkg="following" type="pubpath" name="pathpub" output="screen"/>
+	<!--node pkg="following" type="odom2globalPlan.py" name="pubpath" output="screen"/-->
+</launch>

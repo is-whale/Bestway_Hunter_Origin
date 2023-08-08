@@ -1,0 +1,16 @@
+global_costmap:
+   global_frame: map    # 地图参考系名称
+   robot_base_frame: base_link   # 可参考的机器人本地坐标系
+   update_frequency: 1.0             # 地图更新频率,单位HZ
+   publish_frequency: 0              # 地图可视化信息发布频率，单位HZ
+   #static_map: true            # 代价地图是否需要根据map_server地图信息初始化
+   rolling_window: true      # 代价地图是否需要根据机器人基座滚动
+   resolution: 0.01            # 代价地图分辨率
+   transform_tolerance: 1.0    # 坐标变换TF的容忍误差
+   #map_type: costmap           # 地图类型
+   
+   plugins:
+    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
+    - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+

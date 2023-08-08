@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="ws_path" default="/root/catkin_ws/src/sonic_slam"/> 
+    <!-- For Velodyne VLP-16 
+    <param name="scan_line" value="16" />
+    -->
+
+    <!-- For Velodyne HDL-32  -->
+    <param name="scan_line" value="32" />
+   <!--添加雷达话题-->>
+
+    <!-- For Velodyne HDL-64 -->
+    <!-- <param name="scan_line" value="64" /> -->
+
+
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="false" />
+    <param name="scan_period" value="0.1" /> 
+    <param name="vertical_angle" type="double" value="2.0" />
+    <param name="max_dis" type="double" value="90.0" />
+    <param name="min_dis" type="double" value="3.0" />
+    <param name="topic" type="string" value="/rslidar_points" />
+    <param name="k_new" type="string" value="0"/>
+    <param name="theta_p" type="string" value="0.4"/>
+    <param name="theta_max" type="string" value="200"/>
+    <param name="ws_path" type="string" value="$(arg ws_path)"/>
+    <param name="map_resolution" type="double" value="0.1"/>
+    
+
+    <!--- -->
+    <node pkg="sonic_mapping" type="sonic_mapping_odom_estimation_node" name="sonic_mapping_odom_estimation_node" output="screen"/>
+    <node pkg="sonic_mapping" type="sonic_mapping_laser_processing_node" name="sonic_mapping_laser_processing_node" output="screen"/>
+    
+    <node pkg="tf" type="static_transform_publisher" name="word2map_tf"  args="0 0 0 0 0 0 /world /map 10" />
+    <arg name="rviz" default="true" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find sonic_mapping)/rviz/sonic_mapping.rviz" />
+    </group>
+
+    
+  	<node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_loam" ns="gt" >
+        <param name="/target_frame_name" value="world" />
+        <param name="/source_frame_name" value="velodyne" />
+        <param name="/trajectory_update_rate" value="10.0" />
+        <param name="/trajectory_publish_rate" value="10.0" />
+    </node>
+    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_loam" ns="base_link" >
+        <param name="/target_frame_name" value="world" />
+        <param name="/source_frame_name" value="base_link" />
+        <param name="/trajectory_update_rate" value="10.0" />
+        <param name="/trajectory_publish_rate" value="10.0" />
+    </node>
+
+</launch>

@@ -1,0 +1,42 @@
+header: 
+  seq: 1
+  stamp: 
+    secs: 1646816591
+    nsecs: 285006507
+  frame_id: ''
+level: 2
+name: "/map_server"
+msg: "Read a 500 X 500 map @ 0.500 m/cell"
+file: "/root/catkin_ws/src/navigation/map_server/src/main.cpp"
+function: "loadMapFromValues"
+line: 162
+topics: [/rosout, /map_metadata, /map]
+---
+header: 
+  seq: 0
+  stamp: 
+    secs: 0
+    nsecs:         0
+  frame_id: ''
+level: 2
+name: "/rosbag_play"
+msg: "Opening /root/catkin_ws/src/sonic_localization/data/library.bag"
+file: "/tmp/binarydeb/ros-melodic-rosbag-1.14.13/src/player.cpp"
+function: "Player::publish"
+line: 136
+topics: [/rosout, /clock]
+---
+header: 
+  seq: 4
+  stamp: 
+    secs: 1646816591
+    nsecs: 500533343
+  frame_id: ''
+level: 2
+name: "/rviz"
+msg: "Creating 1 swatches"
+file: "/tmp/binarydeb/ros-melodic-rviz-1.13.25/src/rviz/default_plugin/map_display.cpp"
+function: "MapDisplay::createSwatches"
+line: 604
+topics: [/rosout, /initialpose, /move_base_simple/goal, /clicked_point]
+---

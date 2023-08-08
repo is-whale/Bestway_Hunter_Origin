@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!-- 
+  Simulate a njbl robot with the teb_local_planner in stage:
+  - stage
+  - map_server
+  - move_base
+  - static map
+  - amcl
+  - rviz view
+ -->
+<launch>
+  	<param name="/use_sim_time" value="false"/>
+        
+	<!-- 加载导航地图文件 -->
+	<!-- 设置地图的配置文件 -->
+    	<arg name="map" default="carmap3.yaml" />
+	<!-- 运行地图服务器，并且加载设置的地图-->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find sonic_localization)/data/map/$(arg map)">
+		<param name="frame_id" value="map"/>
+    	</node>
+
+
+
+    <!--  ************** Navigation ***************  -->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="log">
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/dwa_local_planner_params.yaml" command="load" />
+		<!--rosparam file="$(find teb_local_planner_tutorials)/cfg/njbl/teb_local_planner_params.yaml" command="load" /-->
+
+		<param name="base_global_planner" value="global_planner/GlobalPlanner" />
+		<param name="planner_frequency" value="5.0" />
+		<param name="planner_patience" value="5.0" />
+
+		<!--param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /-->
+		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+		<param name="controller_frequency" value="5.0" />
+		<param name="controller_patience" value="5.0" />
+
+		<param name="clearing_rotation_allowed" value="false" /> <!-- Our njbl robot is not able to rotate in place -->
+		<!--remap from="cmd_vel" to="twist_command"/--> 
+  	</node>
+
+
+	<!--  **************** Visualisation ****************  -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_njbl.rviz" output="log"/>
+	<node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen">
+		<remap from="move_base/TebLocalPlannerROS/local_plan" to="move_base/DWAPlannerROS/local_plan"/>
+        </node>
+	<node name="pure_pursuit" pkg="pp" type="ppp" output="log">
+		<!--remap from="smart/cmd_vel2" to="cmd_vel"/-->
+    	</node>
+</launch>
+
