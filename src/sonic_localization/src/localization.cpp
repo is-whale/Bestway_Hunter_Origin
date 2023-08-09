@@ -562,7 +562,7 @@ int main(int argc, char **argv)
     std::vector<int> indices1;
     pcl::removeNaNFromPointCloud(*surface_map, *surface_map, indices1);
     
-   
+  
 
     
     float init_x, init_y, init_z, init_rw, init_rx, init_ry, init_rz;
@@ -580,23 +580,23 @@ int main(int argc, char **argv)
     pcl::PassThrough<PointType> pass;
     pass.setInputCloud (surface_map);
     pass.setFilterFieldName ("x");
-    pass.setFilterLimits (init_t[0] - 200, init_t[0] + 200);
+    pass.setFilterLimits (init_t[0] - 70, init_t[0] + 70);
     pass.setNegative (false);
     pass.filter (*seg_surface_map);
     pass.setInputCloud (seg_surface_map);
     pass.setFilterFieldName ("y");
-    pass.setFilterLimits (init_t[1] - 200, init_t[1] + 200);
+    pass.setFilterLimits (init_t[1] - 70, init_t[1] + 70);
     pass.setNegative (false);
     pass.filter (*seg_surface_map);
 
     pass.setInputCloud (edge_map);
     pass.setFilterFieldName ("x");
-    pass.setFilterLimits (init_t[0] - 200, init_t[0] + 200);
+    pass.setFilterLimits (init_t[0] - 70, init_t[0] + 70);
     pass.setNegative (false);
     pass.filter (*seg_edge_map);
     pass.setInputCloud (seg_edge_map);
     pass.setFilterFieldName ("y");
-    pass.setFilterLimits (init_t[1] - 200, init_t[1] + 200);
+    pass.setFilterLimits (init_t[1] - 70, init_t[1] + 70);
     pass.setNegative (false);
     pass.filter (*seg_edge_map);
 
