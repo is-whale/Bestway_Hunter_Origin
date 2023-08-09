@@ -1,6 +1,6 @@
 image: /root/catkin_ws/src/sonic_slam/data/map/costmap.png
-resolution: 0.3
-origin: [-105, -105, 0.0]
+resolution: 0.1
+origin: [-25, -25, 0.0]
 # -width/2*resolution
 negate: 0
 occupied_thresh: 0.65

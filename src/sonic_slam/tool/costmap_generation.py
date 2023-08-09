@@ -9,8 +9,8 @@ edgemap = o3d.io.read_point_cloud(os.path.join(ws_path, "data", "map", "edgeMap_
 surfmap = o3d.io.read_point_cloud(os.path.join(ws_path, "data", "map", "surfaceMap_pre.pcd"))
 map = surfmap + edgemap
 
-width = 700
-height = 700
+width = 500
+height = 500
 resolution = 0.1 ####################
 map2d_center_x = width / 2
 map2d_center_y = height / 2
