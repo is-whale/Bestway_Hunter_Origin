@@ -3,10 +3,6 @@
     <!-- 
         The robot can be controlled either through CAN bus or UART port. Make sure the hardware
         interface is set up correctly before attempting to connect to the robot.
-        
-        You only need to specify the port name, such as "can0", "/dev/ttyUSB0". The port should 
-        operate with the following configuration:
-        
         * CAN bus: 500k
         * UART: 115200, Parity None, 8-bit Data, 1 Stop Bit 
     -->
@@ -26,15 +22,31 @@
 
     <!-- 启动tf坐标转换 -->
     <include file="$(find transformer_tf)/launch/tf_tranformer.launch"/>
-    <!--node name="odomtransform" pkg="odomtransform" type="ot" output="log" /-->
+        <node name="odomtransform" pkg="odomtransform" type="ot" output="log" >
+
+        </node>
 
     <!--启动3D定位节点 -->
-    <nclude file="$(find sonic_localization)/launch/xunji_localization.launch"/>
+    <nclude file="$(find sonic_localization)/launch/localization_0807.launch"/>
 
     <!-- 启动海康摄像头 -->
-    <include file="$(find hikvision_ros)/launch/hik.launch"/>
+    <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
 
+    <!-- 运行move_base节点 -->
+    <include file="$(find mrobot_navigation)/launch/move_base.launch" />
+
+    <!-- 设置一个/odom与/map之间的静态坐标变换 -->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" /-->
+
+    <!-- 设置一个/base_link与/map之间的静态坐标变换 -->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /base_link 100" /-->
+
+    <!-- 设置一个/base_link与/lidar之间的静态坐标变换 -->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" /-->
+
+    <!-- 运行rviz -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
 
     <!-- 运行自主导航节点 -->
-    <include file="$(find teb_local_planner_tutorials)/launch/xunji_car.launch" />
+    <!-- include file="$(find teb_local_planner_tutorials)/launch/xunji_car.launch" / -->
 </launch>

@@ -59,8 +59,20 @@
 
     <!-- 运行自主导航节点 -->
     <include file="$(find mrobot_navigation)/launch/nav_demo.launch" />
-
     <node name="odom_map_transfer" pkg="odomtransform" type="ot" output="log" />
     <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" />
 
-</launch>
+    <!-- 设置一个/odom与/map之间的静态坐标变换 -->
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" />
+
+    <!-- 设置一个/base_link与/map之间的静态坐标变换 -->
+    <node pkg="tf" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /base_link 100" />
+
+    <!-- 设置一个/base_link与/lidar之间的静态坐标变换 -->
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" />
+
+
+    <!-- 运行rviz -->
+    <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find mrobot_navigation)/rviz/nav.rviz"/-->
+
+    </launch>
