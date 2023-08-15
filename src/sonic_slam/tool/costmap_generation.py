@@ -16,7 +16,7 @@ map2d_center_x = width / 2
 map2d_center_y = height / 2
 map3d_center_x = 0
 map3d_center_y = 0
-occupy_thresh = 6 ###################
+occupy_thresh = 5 ###################
 
 costmap = []
 for i in range(width):

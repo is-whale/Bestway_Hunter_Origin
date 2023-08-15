@@ -10,11 +10,15 @@
         <param name="frame_id" value="map"/>
         <param name="image" value="$(arg ws_path)/data/map/costmap.png"/>
     </node>
-    <node pkg="sonic_localization" type="localization" name="localization" output="screen" />
+    <node pkg="sonic_localization" type="localization" name="localization" output="screen" >
+         <remap from="/local_odom" to="/odom" />
+    </node>
+    
 
-    <arg name="rviz" default="true" />
+    <arg name="rviz" default="false" />
     <group if="$(arg rviz)">
         <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find sonic_localization)/rviz/localization.rviz" />
     </group>
+
 
 </launch>

@@ -11,6 +11,9 @@
     <arg name="simulated_robot" default="false" />
     <arg name="publish_tf" default="true" />
 
+    <!--启动小车底盘驱动-->
+    <include file="$(find hunter_base)/launch/hunter_base.launch" />	
+     
     <!-- 运行激光雷达驱动 -->
     <include file="$(find rslidar_sdk)/launch/rslidar_32.launch" />	
 	    
@@ -19,6 +22,9 @@
 
     <!-- 启动tf坐标转换 -->
     <include file="$(find transformer_tf)/launch/tf_tranformer.launch"/>
+        <node name="odomtransform" pkg="odomtransform" type="ot" output="log" >
+
+        </node>
 
     <!--启动3D定位节点 -->
     <nclude file="$(find sonic_localization)/launch/localization_0807.launch"/>
@@ -26,14 +32,11 @@
     <!-- 启动海康摄像头 -->
     <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
 
-    <!--启动小车底盘驱动-->
-    <include file="$(find hunter_base)/launch/hunter_base.launch" />
-
     <!-- 运行move_base节点 -->
     <include file="$(find mrobot_navigation)/launch/move_base.launch" />
 
     <!-- 设置一个/odom与/map之间的静态坐标变换 -->
-    <!--node pkg="tf2_ros" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" /-->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" /-->
 
     <!-- 设置一个/base_link与/map之间的静态坐标变换 -->
     <!--node pkg="tf" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /base_link 100" /-->
