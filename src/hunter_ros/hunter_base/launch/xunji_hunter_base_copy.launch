@@ -23,7 +23,6 @@
     <!-- 启动tf坐标转换 -->
     <include file="$(find transformer_tf)/launch/tf_tranformer.launch"/>
         <node name="odomtransform" pkg="odomtransform" type="ot" output="log" >
-
         </node>
 
     <!--启动3D定位节点 -->
