@@ -1,15 +1,48 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- 
-        The robot can be controlled either through CAN bus or UART port. Make sure the hardware
-        interface is set up correctly before attempting to connect to the robot.
-        * CAN bus: 500k
-        * UART: 115200, Parity None, 8-bit Data, 1 Stop Bit 
-    -->
     <param name="use_sim_time" value="false"/>
     <arg name="port_name" default="can0" />
     <arg name="simulated_robot" default="false" />
-    <arg name="publish_tf" default="true" />
+    <arg name="publish_tf" default="false" />
+    <!-- TF发布参数修改为false -->
+     <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
+        <param name="port_name" type="string" value="$(arg port_name)" />
+        <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
+        <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="base_link" />
+    </node>
+    
+    <!-- 发布base_link与footprint设置静态坐标系 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="basefootprint_baselink_broadcaster" args="1 0 0 0 0 0 1 link1_parent link1 100" />   -->
+    <!-- 加载机器人模型参数 -->
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_v2.xacro'" />
+    <param name="robot_description" command="$(arg urdf_file)"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
+        <param name="publish_frequency" type="double" value="5.0" />
+    </node>
+    <!--node name="base2laser" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 /base_link /rslidar 50"/-->
+
+    <!-- 里程计估算 -->
+
+    <!-- 传感器融合 -->
+    <!-- <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+        <remap from="robot_pose_ekf/odom_combined" to="odom_combined"/>
+        <param name="freq" value="10.0"/>
+        <param name="sensor_timeout" value="1.0"/>
+        <param name="publish_tf" value="true"/>
+        <param name="odom_used" value="true"/>
+        <param name="imu_used" value="flase"/>
+        <param name="vo_used" value="flase"/>
+        <param name="output_frame" value="odom"/>
+    </node> -->
+
+    <!--启动小车底盘驱动-->
+    <include file="$(find hunter_bringup)/launch/hunter_robot_base.launch" />
 
     <!-- 运行激光雷达驱动 -->
     <include file="$(find rslidar_sdk)/launch/rslidar_32.launch" />	
@@ -18,7 +51,8 @@
     <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan.launch"/>
 
     <!-- 启动tf坐标转换 -->
-    <include file="$(find transformer_tf)/launch/tf_tranformer.launch"/>
+    <include file="$(find transformer_tf)/launch/transformer_tf.launch"/>
+    <!-- 修改到tranformer_tf -->
 
     <!--启动3D定位节点 -->
     <nclude file="$(find sonic_localization)/launch/localization_0807.launch"/>
@@ -26,29 +60,11 @@
     <!-- 启动海康摄像头 -->
     <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
 
-    <!--启动小车底盘驱动-->
-    <include file="$(find hunter_base)/launch/hunter_base.launch" />
-
     <!-- 运行move_base节点 -->
     <include file="$(find mrobot_navigation)/launch/move_base.launch" />
 
-    <!-- 设置一个/odom与/map之间的静态坐标变换 -->
-    <!--node pkg="tf2_ros" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" /-->
-
-    <!-- 设置一个/base_link与/map之间的静态坐标变换 -->
-    <!--node pkg="tf" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /base_link 100" /-->
-
     <!-- 设置一个/base_link与/lidar之间的静态坐标变换 -->
-    <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" /-->
-
-    <!-- 设置一个/odom与/map之间的静态坐标变换 -->
-    <!--node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom 100" /-->
-
-    <!-- 设置一个/base_link与/map之间的静态坐标变换 -->
-    <!--node pkg="tf2_ros" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /base_link 100" /-->
-
-    <!-- 设置一个/base_link与/lidar之间的静态坐标变换 -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_lidar_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" />
+    <!--node pkg="tf2_ros" type="static_transform_publisher" name="base_link_lidar_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" /-->
     
     <!-- 运行rviz -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
