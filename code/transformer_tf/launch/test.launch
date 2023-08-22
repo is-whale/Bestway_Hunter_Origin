@@ -1,4 +1,0 @@
-<launch>
-    <node pkg="transformer_tf" type="tf_transform" name="tf_transform"/>
-    <node name="base2laser" pkg="tf" type="static_transform_publisher" args="0.3 0 0.4 0 0 0 1 /base_link /rslidar 50"/>
-</launch>

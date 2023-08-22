@@ -1,7 +1,0 @@
-image: ../data/map/costmap.png
-resolution: 0.5
-origin: [-125, -125, 0.0]
-# -width/2*resolution
-negate: 0
-occupied_thresh: 0.65
-free_thresh: 0.196
