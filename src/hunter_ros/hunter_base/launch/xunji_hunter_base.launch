@@ -42,7 +42,7 @@
     </node> -->
 
     <!--启动小车底盘驱动-->
-    <include file="$(find hunter_bringup)/launch/hunter_robot_base.launch" />
+    <!-- <include file="$(find hunter_bringup)/launch/hunter_base.launch" /> -->
 
     <!-- 运行激光雷达驱动 -->
     <include file="$(find rslidar_sdk)/launch/rslidar_32.launch" />	
@@ -51,11 +51,11 @@
     <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan.launch"/>
 
     <!-- 启动tf坐标转换 -->
-    <include file="$(find transformer_tf)/launch/transformer_tf.launch"/>
+    <include file="$(find transformer_tf)/launch/tf_transformer.launch"/>
     <!-- 修改到tranformer_tf -->
 
     <!--启动3D定位节点 -->
-    <nclude file="$(find sonic_localization)/launch/localization_0807.launch"/>
+    <include file="$(find sonic_localization)/launch/localization_0807.launch"/>
 
     <!-- 启动海康摄像头 -->
     <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
@@ -63,9 +63,10 @@
     <!-- 运行move_base节点 -->
     <include file="$(find mrobot_navigation)/launch/move_base.launch" />
 
-    <!-- 设置一个/base_link与/lidar之间的静态坐标变换 -->
-    <!--node pkg="tf2_ros" type="static_transform_publisher" name="base_link_lidar_broadcaster" args="0 0 0 0 0 0 /base_link /lidar 100" /-->
+    <!-- 设置一个/map与/odom之间的静态坐标变换 -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /odom " />
     
+
     <!-- 运行rviz -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
 
