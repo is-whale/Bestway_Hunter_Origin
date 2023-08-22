@@ -10,7 +10,7 @@
     <node name="map_server" pkg="map_server" type="map_server" args="$(find sonic_localization)/config/maze.yaml" output="log">
         <param name="frame_id" value="map"/>
         <param name="image" value="$(arg ws_path)/data/map/costmap.png"/>
-    </node>
+    </node> 
     <node pkg="sonic_localization" type="localization" name="localization" output="screen" />
 
     <arg name="rviz" default="true" />
