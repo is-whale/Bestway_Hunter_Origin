@@ -679,12 +679,12 @@ int main(int argc, char **argv)
             tf_cloud = TransformCloud(curr_cloud , q,t);
             std::cout<<"t_tfcloud:"<<t_tfcloud.toc()<<std::endl;
 
-            static tf::TransformBroadcaster br;
-            tf::Transform transform;
-            transform.setOrigin( tf::Vector3(t.x(), t.y(), t.z()) );
-            tf::Quaternion q_tf(q.x(),q.y(),q.z(),q.w());
-            transform.setRotation(q_tf);
-            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
+            // static tf::TransformBroadcaster br;
+            // tf::Transform transform;
+            // transform.setOrigin( tf::Vector3(t.x(), t.y(), t.z()) );
+            // tf::Quaternion q_tf(q.x(),q.y(),q.z(),q.w());
+            // transform.setRotation(q_tf);
+            // br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
             
 
             std::cout<<"all time:"<<t_whole.toc()<<std::endl<<std::endl;
