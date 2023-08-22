@@ -12,7 +12,7 @@
     -->
     <arg name="port_name" default="can0" />
     <arg name="simulated_robot" default="false" />
-    <arg name="publish_tf" default="true" />
+    <arg name="publish_tf" default="false" />
 
     <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
         <param name="port_name" type="string" value="$(arg port_name)" />
