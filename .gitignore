@@ -3,7 +3,6 @@ devel/
 bagfile/pcd/
 pcd/
 *.bag
-*.pcd
 *.pgm
 *.log
 *.swp
