@@ -1,12 +1,13 @@
+#这个文件中有一些参数,你需要根据机器人CPU的计算能力和你的工作站与机器人之间的情况来实验得到。
 global_costmap:
    global_frame: map    # 地图参考系名称
    robot_base_frame: base_link   # 可参考的机器人本地坐标系
-   update_frequency: 1.0             # 地图更新频率,单位HZ
-   publish_frequency: 0              # 地图可视化信息发布频率，单位HZ
-   #static_map: true            # 代价地图是否需要根据map_server地图信息初始化
-   rolling_window: true      # 代价地图是否需要根据机器人基座滚动
+   update_frequency: 1.0         #  根据传感器数据,全局地图更新的频率,单位为赫兹。这个数值越大,你的计算机的CPU负担会越重。特别对于全局地图,通常会设定一个相对较小、在1.0到5.0之间的值。
+   publish_frequency: 0              # 地图可视化信息发布频率，单位HZ。对于静态的全局地图来说,不需要不断发布。
+   #static_map: true            # 代价地图是否需要根据map_server地图信息初始化。这个参数和下一个参数通常会设为相反的值。全局地图通常是静态的,因此我们通常会把这个参数设为true
+   rolling_window: true      # 代价地图是否需要根据机器人基座滚动。当我们把这个参数设为 false时,全局地图不会在机器人移动的时候更新。
    resolution: 0.01            # 代价地图分辨率
-   transform_tolerance: 1.0    # 坐标变换TF的容忍误差
+   transform_tolerance: 1.0    # 坐标变换TF的容忍误差。指定在tf树中框架之间的转换的最大延时,单位为秒。
    #map_type: costmap           # 地图类型
    
    plugins:

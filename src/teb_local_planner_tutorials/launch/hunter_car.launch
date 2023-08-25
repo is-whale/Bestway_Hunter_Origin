@@ -20,12 +20,12 @@
 		<rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/teb_local_planner_params.yaml" command="load" />
 
 		<param name="base_global_planner" value="global_planner/GlobalPlanner" />
-		<param name="planner_frequency" value="3.0" />
-		<param name="planner_patience" value="3.0" />
+		<param name="planner_frequency" value="11.0" />
+		<param name="planner_patience" value="6.0" />
 
 		<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
-		<param name="controller_frequency" value="3.0" />
-		<param name="controller_patience" value="3.0" />
+		<param name="controller_frequency" value="7.0" />
+		<param name="controller_patience" value="8.0" />
 
 		<param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 		<!--remap from="cmd_vel" to="twist_command"/--> 

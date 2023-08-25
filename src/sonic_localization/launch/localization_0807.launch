@@ -1,5 +1,8 @@
 <launch>
-    <arg name="ws_path" default="/root/catkin_ws/src/sonic_slam" />
+    <arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam" />
+    <!-- <arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam/data/office" /> -->
+
+
     <param name="/use_sim_time" value="false" />
     <param name="ws_path" type="string" value="$(arg ws_path)"/>
 

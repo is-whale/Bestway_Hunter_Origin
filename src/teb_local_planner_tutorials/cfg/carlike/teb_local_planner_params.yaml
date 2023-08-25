@@ -4,7 +4,7 @@ TebLocalPlannerROS:
     
  # Trajectory
   
- teb_autosize: True
+ teb_autosize: True #优化期间允许改变轨迹的时域长度
  dt_ref: 0.3
  dt_hysteresis: 0.1
  max_samples: 500
@@ -46,20 +46,20 @@ TebLocalPlannerROS:
 
  # GoalTolerance
     
- xy_goal_tolerance: 0.2
- yaw_goal_tolerance: 0.1
- free_goal_vel: False
+ xy_goal_tolerance: 0.2 #目标 xy 偏移容忍度
+ yaw_goal_tolerance: 0.1 #目标 角度 偏移容忍度
+ free_goal_vel: False #允许机器人以最大速度驶向目的地
  complete_global_plan: True
     
  # Obstacles
     
- min_obstacle_dist: 0.5 # This value must also include our robot's expansion, since footprint_model is set to "line".
- inflation_dist: 0.2
+ min_obstacle_dist: 0.5 #和障碍物最小距离 This value must also include our robot's expansion, since footprint_model is set to "line".
+ inflation_dist: 0.3 #障碍物膨胀距离
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 1.0
  obstacle_poses_affected: 15
 
- dynamic_obstacle_inflation_dist: 0.6
+ dynamic_obstacle_inflation_dist: 0.6 #动态障碍物的膨胀范围
  include_dynamic_obstacles: True 
 
  costmap_converter_plugin: ""

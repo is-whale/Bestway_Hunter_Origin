@@ -5,8 +5,8 @@ local_costmap:
    publish_frequency: 1.0
    #static_map: false
    rolling_window: false
-   width: .6     # 代价地图长，单位m
-   height: 6    # 代价地图高，单位m
+   width: 6     # 代价地图长，单位m6
+   height: 6   # 代价地图高，单位m6
    resolution: 0.01             # 代价地图分辨率 
    transform_tolerance: 1.0     # 坐标变换TF的容许误差
    #map_type: costmap 

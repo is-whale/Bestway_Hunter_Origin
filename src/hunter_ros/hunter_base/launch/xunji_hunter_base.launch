@@ -61,14 +61,16 @@
     <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
 
     <!-- 运行move_base节点 -->
-    <include file="$(find mrobot_navigation)/launch/move_base.launch" />
+    <!-- <include file="$(find mrobot_navigation)/launch/move_base.launch" /> -->
+    <!-- <include file="$(find teb_local_planner_tutorials )/launch/hunter_car.launch" /> -->
+    <include file="$(find teb_local_planner_tutorials )/launch/real_car.launch" />
 
     <!-- 设置一个/map与/odom之间的静态坐标变换 -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /odom " />
     
 
     <!-- 运行rviz -->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
+	<!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/> -->
 
     <!-- 运行自主导航节点 -->
     <!-- include file="$(find teb_local_planner_tutorials)/launch/xunji_car.launch" / -->

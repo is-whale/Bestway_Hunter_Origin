@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-	<arg name="ws_path" default="/root/catkin_ws/src/sonic_slam"/> 
+	<arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam/data/office"/> 
     <!-- For Velodyne VLP-16 
     <param name="scan_line" value="16" />
     -->
