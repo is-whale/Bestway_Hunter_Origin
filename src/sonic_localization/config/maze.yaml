@@ -1,4 +1,7 @@
-image: /home/bestway/hunter_ws/src/sonic_slam/data/map/costmap.png
+#一楼室外地图
+# image: /home/bestway/hunter_ws/src/sonic_slam/data/map/costmap.png
+#四楼室内地图
+image: /home/bestway/hunter_ws/src/sonic_slam/data/office/data/map/costmap.png
 resolution: 0.1
 origin: [-25, -25, 0.0]
 # -width/2*resolution
