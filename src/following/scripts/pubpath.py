@@ -39,7 +39,7 @@ def odom2globalPlan():
 
 
 if __name__ == '__main__':
-    pathfile = "/root/catkin_ws/python/wps.txt"
+    pathfile = "/home/bestway/hunter_ws/python/wps.txt"
     try:
         odom2globalPlan()
     except rospy.ROSInterruptException:
