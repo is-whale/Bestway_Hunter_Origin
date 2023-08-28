@@ -19,17 +19,21 @@
 		<rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/global_costmap_params.yaml" command="load" />
 		<rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/teb_local_planner_params.yaml" command="load" />
 
+	<!-- 尝试使用waypoint算法 需注释下面启用base_g_p的部分-->
+	<!-- <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/base_global_planner_params.yaml" command="load" /> -->
+
 		<param name="base_global_planner" value="global_planner/GlobalPlanner" />
 		<param name="planner_frequency" value="5.0" />
 		<param name="planner_patience" value="5.0" />
 
+
 		<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
-		<param name="controller_frequency" value="5.0" />
+		<param name="controller_frequency" value="6.0" />
 		<param name="controller_patience" value="5.0" />
 
 		<param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 		<!-- for cmd_vel_mux -->
-  	    <remap from="cmd_vel" to="twist_conmmand"/>
+  	    <!-- <remap from="cmd_vel" to="twist_conmmand"/> -->
 		
 
   	</node>
