@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- 
+  Simulate a njbl robot with the teb_local_planner in stage:
+  - stage
+  - map_server
+  - move_base
+  - static map
+  - amcl
+  - rviz view
+ -->
+<launch>
+  	<param name="/use_sim_time" value="false"/>
+	<arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam/data/office" />
+
+	<!-- 加载导航地图文件-->
+        <node name="map_server" pkg="map_server" type="map_server" args="$(find sonic_localization)/config/maze.yaml" output="log">
+        <param name="frame_id" value="map"/>
+        <param name="image" value="$(arg ws_path)/data/map/costmap.png"/>
+    </node>
+
+        
+    <!--  ************** 路径跟踪单元 ***************  -->
+	<node name="pure_pursuit" pkg="pp" type="ppp" output="log">
+		<!--remap from="smart/cmd_vel2" to="cmd_vel"/-->
+	</node>
+	<include file="$(find following)/launch/pubpath.launch"/>
+
+    <!-- *************** 加载rviz ******************* -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_njbl.rviz" output="log"/>
+</launch>
+
