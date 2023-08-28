@@ -13,7 +13,7 @@
         <param name="frame_id" value="map"/>
         <param name="image" value="$(arg ws_path)/data/map/costmap.png"/>
     </node>
-    <node pkg="sonic_localization" type="localization" name="localization" output="screen" >
+    <node pkg="sonic_localization" type="localization" name="localization" output="log" >
          <remap from="/local_odom" to="/odom" />
     </node>
     
