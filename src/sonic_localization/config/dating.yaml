@@ -1,7 +1,12 @@
+#一楼室外地图
+# image: /home/bestway/hunter_ws/src/sonic_slam/data/map/costmap.png
+#四楼室内地图
+#image: /home/bestway/hunter_ws/src/sonic_slam/data/office/data/map/costmap.png
+#三楼大厅地图
 image: ../data/map/dating.png
-resolution: 0.050000
-origin: [-53.800000, -13.800000, 0.000000]
+resolution: 0.1
+origin: [-25, -25, 0.0]
+# -width/2*resolution
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196
-
