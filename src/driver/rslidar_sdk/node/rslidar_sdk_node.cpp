@@ -114,6 +114,7 @@ int main(int argc, char** argv)
   demo_ptr->init(config);
   demo_ptr->start();
 
+  RS_MSG << "ws_path is " << config_path << " hahaha\n";
   RS_MSG << "RoboSense-LiDAR-Driver is running....." << RS_REND;
 
 #ifdef ROS_FOUND

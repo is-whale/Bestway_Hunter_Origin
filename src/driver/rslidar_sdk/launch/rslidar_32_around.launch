@@ -1,8 +1,7 @@
 <launch>
-<!-- 忽略后方锐角范围的点云，用于定位导航 -->
+<!-- 390环视雷达，用于建图 -->
   <node pkg="rslidar_sdk" name="rslidar_sdk_node" type="rslidar_sdk_node" output="screen">
-<!-- 默认路径是源码搜索驱动本身的路径 -->
-    <param name="config_path" value=""/>
+    <param name="config_path" value="/home/bestway/hunter_ws/src/driver/rslidar_sdk/config/config/config.yaml"/>
   </node>
   <!-- rviz -->
   <!-- <node pkg="rviz" name="rviz" type="rviz" args="-d $(find rslidar_sdk)/rviz/rviz.rviz" /> -->
