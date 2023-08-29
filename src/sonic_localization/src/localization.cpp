@@ -51,7 +51,9 @@
 #include  "tictoc.h"
 #include <tf/transform_broadcaster.h>
 
-typedef pcl::PointXYZI PointType;
+//typedef pcl::PointXYZI PointType;
+//*修改PCL点云处理类型为XYZ,不包含intensity
+typedef pcl::PointXYZ PointType;
 
 std::queue<sensor_msgs::PointCloud2ConstPtr> currcloudBuf;
 ros::Publisher pubtfcloud;
@@ -151,7 +153,7 @@ pcl::PointCloud<PointType>::Ptr  TransformCloud(pcl::PointCloud<PointType>::Ptr 
         tmppoint.x = un_point.x();
         tmppoint.y = un_point.y();
         tmppoint.z = un_point.z();
-        tmppoint.intensity = cloudin->points[i].intensity;
+        //tmppoint.intensity = cloudin->points[i].intensity;
         cloudout->points.push_back(tmppoint);
     }
     return cloudout;
@@ -194,7 +196,7 @@ void pointAssociateToMap(PointType const *const pi, PointType *const po)
     po->x = point_w.x();
     po->y = point_w.y();
     po->z = point_w.z();
-    po->intensity = pi->intensity;
+    //po->intensity = pi->intensity;
     //po->intensity = 1.0;
 }
 
@@ -400,7 +402,8 @@ void odometry(const pcl::PointCloud<PointType>::Ptr& edge_map, const pcl::PointC
             int corner_num=0;
             for (int i = 0; i < (int)downsampledEdgeCloud->points.size(); i++)
             {
-                pcl::PointXYZI point_temp;
+                //pcl::PointXYZI point_temp;
+		pcl::PointXYZ point_temp;
                 pointAssociateToMap(&(downsampledEdgeCloud->points[i]), &point_temp);
 
                 std::vector<int> pointSearchInd;
@@ -456,7 +459,8 @@ void odometry(const pcl::PointCloud<PointType>::Ptr& edge_map, const pcl::PointC
             int surf_num=0;
             for (int i = 0; i < (int)downsampledSurfCloud->points.size(); i++)
             {
-                pcl::PointXYZI point_temp;
+                //pcl::PointXYZI point_temp;
+                pcl::PointXYZ point_temp;
                 pointAssociateToMap(&(downsampledSurfCloud->points[i]), &point_temp);
                 std::vector<int> pointSearchInd;
                 std::vector<float> pointSearchSqDis;

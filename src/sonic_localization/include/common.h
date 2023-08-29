@@ -43,7 +43,9 @@
 
 using namespace std;
 
-typedef pcl::PointXYZI  PointType;
+//typedef pcl::PointXYZI  PointType;
+//*修改PCL点云处理类型为XYZ,不包含intensity
+typedef pcl::PointXYZ  PointType;
 
 template <class class_name>
 bool getParameter(const std::string& paramName, class_name& param)
