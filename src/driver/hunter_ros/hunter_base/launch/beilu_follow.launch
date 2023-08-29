@@ -16,7 +16,12 @@
     <!--启动3D定位节点 -->
     <include file="$(find sonic_localization)/launch/beilu_localization.launch"/>
 
+    <!-- 启动teb局部规划 -->
+    <!-- <include file="$(find teb_local_planner_tutorials)/launch/teb_for_track.launch"/> -->
     <!-- 启动海康摄像头 -->
     <!--include file="$(find hikvision_ros)/launch/hik.launch"/-->
+
+    <!-- 运行路径跟踪节点 -->
+    <include file="$(find teb_local_planner_tutorials)/launch/follow_car.launch" />
 
 </launch>

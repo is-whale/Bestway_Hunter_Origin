@@ -4,16 +4,16 @@
         <node pkg="following" type="following" name="following" output="screen">
 		<!--rosparam file="$(find following)/config/following.yaml" command="load" ns="following"/-->
 		<param name="tolerance" value="0.05"/>
-		<param name="max_linear_velocity" value="0.2"/>
+		<param name="max_linear_velocity" value="0.5"/>
 		<param name="max_angular_velocity" value="0.5"/>
-		<param name="look_ahead" value="2.0"/>
+		<param name="look_ahead" value="50.0"/>
 		<param name="angle_to_velocity" value="1.0"/>
 		<param name="skip_sensor_dist" value="0.06"/>
-		<param name="avoid_distance_front" value="0.5"/>
+		<param name="avoid_distance_front" value="0.2"/>
 		<param name="avoid_distance_side" value="0.14"/>
 		<param name="approx_iterations" value="10.0"/>
 		<param name="stop_at_target" value="true"/>
-		<param name="path" value="/followingpath"/>
+		<param name="path" value="/stable_local"/>
 		<param name="scan" value="/scan"/>
 		<param name="cmd_vel" value="/cmd_vel"/>
 		<param name="path_frame" value="/map"/>

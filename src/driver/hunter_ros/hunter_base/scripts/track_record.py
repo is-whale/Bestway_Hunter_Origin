@@ -36,6 +36,6 @@ def publish(self):
 
 
 if __name__ == '__main__':
-    rospy.init_node("hunter_odom", anonymous=True)         # 初始化节点 名称:hunter_odom  
-    rospy.Subscriber('hunter_odom',Odometry,callback)        # 订阅节点
+    rospy.init_node("odom", anonymous=True)         # 初始化节点 名称:hunter_odom  
+    rospy.Subscriber('odom',Odometry,callback)        # 订阅节点
     rospy.spin()                                             # 阻塞线程

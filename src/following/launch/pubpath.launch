@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <launch>
+	<!--param name="/use_sim_time" value="false"/-->
+
 	<!-- 运行轨迹转换程序，发布global_plan轨迹主题 -->
 	<!--node pkg="following" type="pubpath" name="pathpub" output="screen"/-->
 	<node pkg="following" type="pubpath.py" name="pubpath" output="screen">
