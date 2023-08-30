@@ -19,17 +19,17 @@ subscribers:
     priority:    0
     short_desc:  "The default cmd_vel, controllers unaware that we are multiplexing cmd_vel should come here"
   - name:        "Navigation stack"
-    topic:       "input/twist_conmmand"
+    topic:       "input/move_base_cmd"
     timeout:     0.5
     priority:    1
-    short_desc:  "Navigation stack controller"
-  - name:        "Remote control"
-    topic:       "input/remote_vel"
+    short_desc:  "Key controller"
+  - name:        "Key control"
+    topic:       "input/key_vel"
     timeout:     0.1
-    priority:    4
+    priority:    2
     short_desc:  "using controller can be used on miniPC"
-  - name:        "secure vel output"
-    topic:       "input/keyop"
+  - name:        "secure vel"
+    topic:       "input/auto_brake_cmd"
     timeout:     0.1
     priority:    10
     short_desc:  "secure vel use piontcloud"

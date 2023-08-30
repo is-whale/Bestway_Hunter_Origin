@@ -10,7 +10,6 @@
  -->
 <launch>
   	<param name="/use_sim_time" value="false"/>
-
     <!--  ************** Navigation ***************  -->
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="log">
 		<rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -33,9 +32,7 @@
 
 		<param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 		<!-- for cmd_vel_mux -->
-  	    <!-- <remap from="cmd_vel" to="twist_conmmand"/> -->
-		
-
+  	    <remap from="cmd_vel" to="/yocs_cmd_vel_mux/input/move_base_cmd"/>
   	</node>
 
 	<!--  ****** Maps *****  -->
@@ -47,5 +44,3 @@
 	<!--remap from="smart/cmd_vel2" to="twist_command"/-->
     </node>
 </launch>
-
-
