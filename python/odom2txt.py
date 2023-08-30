@@ -15,7 +15,7 @@ class Hunter_core():
         rospy.init_node("hunter_core", anonymous=True)
         #self.wps_buf = []
   
-        rospy.Subscriber("/hunter_odom", Odometry, self.wpsCallback, queue_size=10)
+        rospy.Subscriber("/odom", Odometry, self.wpsCallback, queue_size=10)
         rospy.spin()            
             
     def wpsCallback(self, msgs):
@@ -43,6 +43,6 @@ class Hunter_core():
 if __name__ == '__main__':
     filename = './wps.txt'
     f1 = open(filename,'w')
-    f1.write("position.x|position.y|position.z|orientation.x|orientation.y|orientation.z|orientation.w" + "\n")
+    #f1.write("position.x|position.y|position.z|orientation.x|orientation.y|orientation.z|orientation.w" + "\n")
     hunter_core = Hunter_core()
     f1.close()
