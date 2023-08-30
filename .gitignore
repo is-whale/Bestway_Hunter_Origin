@@ -1,11 +1,14 @@
 build/
 devel/
 bagfile/pcd/
+devel_1/
+logs/
 pcd/
 *.bag
 *.pgm
 *.log
 *.swp
 logfile
+
 .vscode/c_cpp_properties.json
 .vscode/settings.json
