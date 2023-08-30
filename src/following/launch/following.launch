@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<param name="/use_sim_time" value="false"/>
+
+        <!--运行void_obstacle.py,根据Purepsuit规控出的速度进行调度-->
+	<node pkg="following" type="void_obstacle.py" name="following" output="screen"/>
+</launch>
+

@@ -284,7 +284,7 @@ int main(int argc, char **argv) {
   pose.header.frame_id = "odom";
 
   // ros::Subscriber splinePath = n.subscribe("/move_base/TebLocalPlannerROS/local_plan", 20, pointCallback);
-  ros::Subscriber splinePath = n.subscribe("stable_local", 20, pointCallback);
+  ros::Subscriber splinePath = n.subscribe("/stable_local", 20, pointCallback);
 
   ros::Subscriber odomMsgs = n.subscribe("/odom",20,odomCallback);
   ros::Subscriber signn = n.subscribe("/sign",20,signCallback);

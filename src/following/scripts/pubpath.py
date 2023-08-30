@@ -12,10 +12,11 @@ from nav_msgs.msg import Path
 
 
 def odom2globalPlan():
-    path_pub = rospy.Publisher('/followingpath',Path, queue_size=10)  # 发布节点名称: followingpath
-    path = Path()                                         # 初始化消息类型,Path
+    #rospy.init_node("pubpath", anonymous=True)         			# 初始化节点 名称:pubpath
+    path_pub = rospy.Publisher('/followingpath',Path, queue_size=10)    # 发布节点名称: followingpath
+    path = Path()                                                       # 初始化消息类型,Path
     rospy.init_node("pubpath", anonymous=True)         			# 初始化节点 名称:pubpath
-    rate = rospy.Rate(1)							# 设置ros发布频率，单位hz
+    rate = rospy.Rate(0.5)							# 设置ros发布频率，单位hz。频率不能太快，要低于1HZ。否则purepsuit节点会导致tf转换不过来进而报错
     path.header.frame_id = "map"
     path.header.stamp = rospy.get_rostime()					# 获取ros当前时间
     pathList = []

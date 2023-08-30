@@ -15,15 +15,17 @@
         	<param name="frame_id" value="map"/>
     	</node>
 
-    	<!--   ************** 发布寻迹路径 *************** /-->
-   	<include file="$(find following)/launch/pubpath.launch"/>
-
-    <!-- *************** 加载rviz ******************* -->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_njbl.rviz" output="log"/>
-
-    <!--  ************** 路径跟踪单元 ***************  -->
-    	<node name="path_buffer" pkg="PathBuf" type="pathbuf" output="log" />
-	<node name="pure_pursuit" pkg="pp" type="ppp" output="log">
+    	<!--  ************** 路径跟踪规划 ***************  -->
+	<node name="pure_pursuit" pkg="pp" type="ppp" output="log"/>
 		<!--remap from="smart/cmd_vel2" to="cmd_vel"/-->
-	</node>
+		
+	<!--   ************** 发布寻迹路径 *************** /-->
+   	<include file="$(find following)/launch/pubpath.launch"/>
+	
+	<!--   ************** 执行路径跟踪 *************** /-->
+   	<include file="$(find following)/launch/following.launch"/>
+
+
+    	<!-- *************** 加载rviz ******************* -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_njbl.rviz" output="log"/>
 </launch>
