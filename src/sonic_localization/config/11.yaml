@@ -1,4 +1,4 @@
-image: ../data/map/dating.png
+image: dating.pgm
 resolution: 0.030000
 origin: [-39.463844, -5.802391, 0.000000]
 negate: 0

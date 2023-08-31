@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     ros::NodeHandle nh;
     ros::Publisher path_pub =nh.advertise<nav_msgs::Path>("global_plan",10, true);
     std::ifstream infile;
-    infile.open("/home/lzw/tianbot_ws/src/f1tenth_simulator/data/path.txt");
+    infile.open("/home/bestway/hunter_ws/src/pursuit/pure_pursuit/f1tenth_simulator/data/path.txt");
     assert(infile.is_open());  //若失败,则输出错误消息,并终止程序运行
     std::vector<std::pair<double, double>> xy_points;
     geometry_msgs::PoseStamped path_element;

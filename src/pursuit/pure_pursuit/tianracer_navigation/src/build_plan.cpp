@@ -22,7 +22,7 @@ void odomCallback(const nav_msgs::Path::ConstPtr& msg)
 }
 
 int main(int argc, char **argv) {
-    foutC1.open("/home/lzw/tianbot_ws/src/f1tenth_simulator/data/path.txt");
+    foutC1.open("/home/bestway/hunter_ws/src/pursuit/pure_pursuit/f1tenth_simulator/data/path.txt");
     ros::init(argc, argv, "path");
     ros::NodeHandle nh;
     ros::Subscriber odom_sub_ = nh.subscribe<nav_msgs::Path> ("/move_base/NavfnROS/plan",1,odomCallback);

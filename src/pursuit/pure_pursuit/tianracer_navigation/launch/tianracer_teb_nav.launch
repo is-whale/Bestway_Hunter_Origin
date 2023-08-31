@@ -8,26 +8,38 @@
   - rviz view
  -->
 <launch>
-    <arg name="use_rviz" default="false" />
+    <arg name="use_rviz" default="true" />
     <!-- for amcl -->
-    <arg name="init_x" default="0.0" />
+    <!-- <arg name="init_x" default="0.0" />
     <arg name="init_y" default="0.0" />
-    <arg name="init_a" default="0.0" />
+    <arg name="init_a" default="0.0" />-->
     <arg name="base" default="$(optenv TIANRACER_BASE compact)" />
     <!-- for Map server -->
-    <arg name="map_file" default="$(optenv TIANRACER_MAP_FILE tianbot_office)" />
-    <arg name="map_path" default="$(find tianracer_slam)/maps" />
+    <!-- <arg name="map_file" default="$(optenv TIANRACER_MAP_FILE tianbot_office)" />
+    <arg name="map_path" default="$(find tianracer_slam)/maps" /> -->
 
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_path)/$(arg map_file).yaml"/>
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_path)/$(arg map_file).yaml"/> -->
 
+    <!--启动小车底盘驱动-->
+    <include file="$(find hunter_base)/launch/hunter_base.launch" />
+
+
+    <!-- 运行激光雷达驱动 -->
+    <include file="$(find rslidar_sdk)/launch/rslidar_32_around.launch" />	
     <!-- Localization -->
+
+    <include file="$(find sonic_localization)/launch/localization_0807.launch"/>
+    
+    <!-- 启动tf坐标转换 -->
+    <include file="$(find transformer_tf)/launch/transformer_tf.launch"/>
+
     <!-- AMCL -->
-    <include file="$(find tianracer_navigation)/launch/includes/tianbot_amcl.launch.xml">
+    <!-- <include file="$(find tianracer_navigation)/launch/includes/tianbot_amcl.launch.xml">
         <arg name="init_x" value="$(arg init_x)"/>
         <arg name="init_y" value="$(arg init_y)"/>
         <arg name="init_a" value="$(arg init_a)"/>
-    </include>
+    </include> -->
     
     <!--  Navigation -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
@@ -50,7 +62,7 @@
     <!-- cmd_vel to ackermann_cmd -->
     <node pkg="tianracer_navigation" type="cmd_vel_to_ackermann_drive.py" name="vel_to_ackermann" >
         <param name="twist_cmd_topic" value="/cmd_vel" />
-	      <param name="ackermann_cmd_topic" value="/tianracer/ackermann_cmd" />
+	    <param name="ackermann_cmd_topic" value="/tianracer/ackermann_cmd" />
         <param if="$(eval base=='compact')" name="wheelbase" value="0.255" />
         <param if="$(eval base=='standard')" name="wheelbase" value="0.33" />
         <param if="$(eval base=='fullsize')" name="wheelbase" value="0.6" />
