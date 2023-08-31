@@ -46,7 +46,8 @@
     <!-- <include file="$(find hunter_bringup)/launch/hunter_base.launch" /> -->
 
     <!-- 运行激光雷达驱动 -->
-    <include file="$(find rslidar_sdk)/launch/rslidar_32_around.launch" />	
+    <!-- 待换回360度 -->
+    <include file="$(find rslidar_sdk)/launch/rslidar_32.launch" />	
 	    
     <!-- 运行3D点云数据转2D激光数据 -->
     <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan.launch"/>

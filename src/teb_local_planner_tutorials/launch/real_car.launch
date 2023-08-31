@@ -39,8 +39,9 @@
 
 	<!--  **************** Visualisation ****************  -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
-    <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" />
-    <node name="pure_pursuit" pkg="pp" type="ppp" output="log" >
+	<!-- 打开下面两个会导致局部规划失效 -->
+    <!-- <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" /> -->
+    <!-- <node name="pure_pursuit" pkg="pp" type="ppp" output="log" > -->
 	<!--remap from="smart/cmd_vel2" to="twist_command"/-->
     </node>
 </launch>
