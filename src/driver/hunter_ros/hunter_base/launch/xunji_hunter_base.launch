@@ -20,7 +20,7 @@
     <!-- <node pkg="tf" type="static_transform_publisher" name="basefootprint_baselink_broadcaster" args="1 0 0 0 0 0 1 link1_parent link1 100" />   -->
 
     <!-- 加载机器人模型参数 -->
-    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_v2.xacro'" />
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_v2.xacro'" /> -->
     <param name="robot_description" command="$(arg urdf_file)"/>
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
@@ -66,6 +66,7 @@
     <!-- 运行move_base节点 -->
     <!-- <include file="$(find mrobot_navigation)/launch/move_base.launch" /> -->
     <!-- <include file="$(find teb_local_planner_tutorials )/launch/hunter_car.launch" /> -->
+    
     <!-- 目前参数较好的 -->
     <include file="$(find teb_local_planner_tutorials )/launch/real_car.launch" />
 

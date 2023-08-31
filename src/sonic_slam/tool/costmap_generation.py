@@ -11,12 +11,14 @@ map = surfmap + edgemap
 
 width = 500
 height = 500
+# width = 1000
+# height = 1000
 resolution = 0.1 ####################
 map2d_center_x = width / 2
 map2d_center_y = height / 2
 map3d_center_x = 0
 map3d_center_y = 0
-occupy_thresh = 5 ###################
+occupy_thresh = 7 ###################
 
 costmap = []
 for i in range(width):

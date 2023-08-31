@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-	<arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam/data/office"/> 
+    <arg name="ws_path" default="/home/bestway/hunter_ws/src/sonic_slam/data/office"/> 
     <!-- For Velodyne VLP-16 
     <param name="scan_line" value="16" />
     -->
@@ -28,7 +28,7 @@
     <param name="map_resolution" type="double" value="0.1"/>
     
     <!-- 雷达驱动 -->
-    <include file="$(find rslidar_sdk)/launch/rslidar_32_around.launch">
+    <include file="$(find rslidar_sdk)/launch/rslidar_32_around.launch"/>
 
     <node pkg="sonic_mapping" type="sonic_mapping_odom_estimation_node" name="sonic_mapping_odom_estimation_node" output="screen"/>
     <node pkg="sonic_mapping" type="sonic_mapping_laser_processing_node" name="sonic_mapping_laser_processing_node" output="screen"/>
