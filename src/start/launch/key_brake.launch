@@ -1,0 +1,35 @@
+<launch>
+
+    <!-- 启动底盘 -->
+    <param name="use_sim_time" value="false" />
+    <arg name="port_name" default="can0" />
+    <arg name="simulated_robot" default="false" />
+    <arg name="publish_tf" default="false" />
+
+    <!-- 为重定向cmd_vel并且不影响其他节点,单独启动底盘节点. TF发布参数修改为false -->
+    <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
+        <param name="port_name" type="string" value="$(arg port_name)" />
+        <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
+        <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="base_link" />
+        <remap from="/cmd_vel" to="/yocs_cmd_vel_mux/output/cmd_vel" />
+    </node>
+
+    <!-- 启动键盘控制节点 -->
+    <include file="$(find hunter_bringup)/launch/hunter_teleop_keyboard.launch" />
+
+    <!-- 启动速度选择器 -->
+    <include file="$(find yocs_cmd_vel_mux)/launch/hunter_cmd_mux.launch" />
+
+    <!-- 运行激光雷达驱动 -->
+    <include file="$(find rslidar_sdk)/launch/rslidar_32.launch" />
+
+    <!-- 运行3D点云数据转2D激光数据 -->
+    <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan.launch" />
+
+    <!-- 启动主动刹车节点 -->
+    <include file="$(find following)/launch/auto_brake.launch" />
+
+</launch>

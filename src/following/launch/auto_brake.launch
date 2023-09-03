@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="/use_sim_time" value="false" />
+    <!-- 重定向输出 -->
+    <remap from="/auto_brake/cmd_vel" to="/yocs_cmd_vel_mux/input/auto_brake_cmd" />
+
+    <!--运行void_obstacle.py,根据Purepsuit规控出的速度进行调度-->
+    <node pkg="following" type="auto_brake.py" name="auto_brake" output="log" />
+</launch>
