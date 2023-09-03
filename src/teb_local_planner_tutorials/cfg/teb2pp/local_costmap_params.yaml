@@ -1,0 +1,17 @@
+local_costmap:
+  global_frame: map #对于本地代价地图来说,我们使用 odometry框架来作为 global框架
+  robot_base_frame: base_footprint
+  update_frequency: 3.0 #根据传感器数据,本地地图更新的频率,单位为次/秒。对于很慢的计算机,你可能需要减小这个值。
+  publish_frequency: 1.0 #我们想更新已经发布出去的本地地图,所以我们会把这个值设为非零。一秒一次应该足够了,除非你的机器人要移动得更快
+  #static_map: false #这个参数和下一个参数通常会设为相反的值。当本地地图需要根据传感器数据动态更新的时候,我们通常会把这个参数设为 false
+  rolling_window: true
+  width: 6
+  height: 6
+  resolution: 0.01 #滑动地图的分辨率,单位为米。这个参数应该与YAML文件设置的地图分辨率匹配
+  transform_tolerance: 0.5 #指定在tf树框架之间的转换,或可能会暂时中止的地图绘制过程中两者的最大延时,单位为秒。0.5
+  
+  plugins:
+   - {name: static_layer,        type: "costmap_2d::StaticLayer"}
+   - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}
+    # - {name: grid_layer,          type: "simple_layer_namespace::GridLayer"}
+   - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
