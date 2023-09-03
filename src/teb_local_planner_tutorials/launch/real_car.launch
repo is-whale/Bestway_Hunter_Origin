@@ -32,7 +32,7 @@
 
 		<param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 		<!-- for cmd_vel_mux -->
-  	    <remap from="cmd_vel" to="/yocs_cmd_vel_mux/input/move_base_cmd"/>
+  	    <!-- <remap from="cmd_vel" to="/yocs_cmd_vel_mux/input/move_base_cmd"/> -->
   	</node>
 
 	<!--  ****** Maps *****  -->
@@ -40,8 +40,6 @@
 	<!--  **************** Visualisation ****************  -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
 	<!-- 打开下面两个会导致局部规划失效 -->
-    <!-- <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" /> -->
-    <!-- <node name="pure_pursuit" pkg="pp" type="ppp" output="log" > -->
-	<!--remap from="smart/cmd_vel2" to="twist_command"/-->
-    </node>
+    <!--node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" /-->
+    <!--node name="pure_pursuit" pkg="pp" type="ppp" output="log" /-->
 </launch>

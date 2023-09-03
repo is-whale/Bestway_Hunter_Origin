@@ -19,13 +19,13 @@ TebLocalPlannerROS:
     
  # Robot
          
- max_vel_x: 3
- max_vel_x_backwards: 0.5
+ max_vel_x: 8
+ max_vel_x_backwards: 0.1
  max_vel_y: 0.0
  #max_vel_theta: 0.3 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
- max_vel_theta: 0.5 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
- acc_lim_x: 1
- acc_lim_theta: 0.5
+ max_vel_theta: 1.0 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
+ acc_lim_x: 3
+ acc_lim_theta: 0.3
 
  # ********************** Carlike robot parameters ********************
  min_turning_radius: 0.55        # Min turning radius of the carlike robot (compute value using a model or adjust with rqt_reconfigure manually)
@@ -76,7 +76,7 @@ TebLocalPlannerROS:
  obstacle_cost_exponent: 4
  weight_max_vel_x: 10
  weight_max_vel_theta: 1
- weight_acc_lim_x: 1
+ weight_acc_lim_x: 1.0
  weight_acc_lim_theta: 1
  weight_kinematics_nh: 100
  weight_kinematics_forward_drive: 1
@@ -87,7 +87,7 @@ TebLocalPlannerROS:
  weight_inflation: 0.2
  weight_dynamic_obstacle: 10 # not in use yet
  weight_dynamic_obstacle_inflation: 0.2
- weight_viapoint: 1
+ weight_viapoint: 1.0
  weight_adapt_factor: 2
 
  # Homotopy Class Planner

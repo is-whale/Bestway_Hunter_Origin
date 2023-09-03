@@ -28,15 +28,13 @@
 		<param name="controller_patience" value="8.0" />
 
 		<param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
-		<!--remap from="cmd_vel" to="twist_command"/--> 
+		<remap from="cmd_vel" to="twist_command"/>
   	</node>
 
 	<!--  ****** Maps *****  -->
 
 	<!--  **************** Visualisation ****************  -->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation_pp.rviz" output="log"/>
-	<!--node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen"/-->
-	<!--node name="pure_pursuit" pkg="pp" type="ppp" output="log"/-->
+	<node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen"/>
+	<node name="pure_pursuit" pkg="pp" type="ppp" output="log"/>
 </launch>
-
-
