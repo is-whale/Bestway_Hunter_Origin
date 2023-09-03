@@ -11,12 +11,13 @@ lidar:
                                    #             RSM1, RSM1_JUMBO, RSM2, RSE1
       msop_port: 6699              #Msop port of lidar
       difop_port: 7788             #Difop port of lidar
-      start_angle: 210               #Start angle of point cloud
-      end_angle: 150              #End angle of point cloud 
-      # start_angle: 240               #Start angle of point cloud
-      # end_angle: 140              #End angle of point cloud 
+      #start_angle: 210               #Start angle of point cloud
+      #end_angle: 150              #End angle of point cloud 
+      start_angle: 240               #Start angle of point cloud
+      end_angle: 140              #End angle of point cloud 
       wait_for_difop: true
-      min_distance: 0.8          #Minimum distance of point cloud
+      #min_distance: 0.8          #Minimum distance of point cloud
+      min_distance: 0.2          #Minimum distance of point cloud
       max_distance: 200            #Maximum distance of point cloud
       use_lidar_clock: false       #True--Use the lidar clock as the message timestamp
                                    #False-- Use the system clock as the timestamp
