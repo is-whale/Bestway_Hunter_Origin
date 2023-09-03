@@ -1,11 +1,10 @@
 <?xml version="1.1"?>
 <launch>
     <!-- <arg name="pointcloud_topic" default="cloud_in"/> -->
-    <!-- 注释 -->
+    <!-- 本文件用于全自动模式，修改参数调高了点云转scan的最低角度，忽略了轮子高度以上 -->
 
     <arg name="pointcloud_topic" default="rslidar_points"/>
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
-	    <!-- <remap from="cloud_in" to="/rslidar_points"/> -->
 
         <!-- <remap from="/rslidar_points" to="/scan"/> -->
         <!-- 取消注释 -->

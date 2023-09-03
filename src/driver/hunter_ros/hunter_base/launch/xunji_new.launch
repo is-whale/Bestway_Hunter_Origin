@@ -1,0 +1,87 @@
+<?xml version="1.1"?>
+<launch>
+    <param name="use_sim_time" value="false"/>
+    <arg name="port_name" default="can0" />
+    <arg name="simulated_robot" default="false" />
+    <arg name="publish_tf" default="false" />
+
+    <!-- 为重定向cmd_vel并且不影响其他节点,单独启动底盘节点. TF发布参数修改为false -->
+     <node name="hunter_base_node" pkg="hunter_base" type="hunter_base_node" output="screen">
+        <param name="port_name" type="string" value="$(arg port_name)" />
+        <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
+        <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="base_link" />
+        <!-- <remap from="/cmd_vel" to="/yocs_cmd_vel_mux/output/cmd_vel"/> -->
+    </node>
+    
+    <!-- 发布base_link与footprint设置静态坐标系 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="basefootprint_baselink_broadcaster" args="1 0 0 0 0 0 1 link1_parent link1 100" />   -->
+
+    <!-- 加载机器人模型参数 -->
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_v2.xacro'" />
+    <param name="robot_description" command="$(arg urdf_file)"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
+    <param name="publish_frequency" type="double" value="5.0" />
+    </node>
+
+    <!--node name="base2laser" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 /base_link /rslidar 50"/-->
+
+    <!-- 里程计估算 -->
+    <!-- 传感器融合 -->
+    <!-- <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+        <remap from="robot_pose_ekf/odom_combined" to="odom_combined"/>
+        <param name="freq" value="10.0"/>
+        <param name="sensor_timeout" value="1.0"/>
+        <param name="publish_tf" value="true"/>
+        <param name="odom_used" value="true"/>
+        <param name="imu_used" value="flase"/>
+        <param name="vo_used" value="flase"/>
+        <param name="output_frame" value="odom"/>
+    </node> -->
+
+    <!--启动小车底盘驱动-->
+    <!-- <include file="$(find hunter_bringup)/launch/hunter_base.launch" /> -->
+
+    <!-- 运行激光雷达驱动 -->
+    <include file="$(find rslidar_sdk)/launch/rslidar_32_around.launch" />	
+	    
+    <!-- 运行3D点云数据转2D激光数据 下面launch文件雷达角度调高，忽略了轮子上表面以下 -->
+    <include file="$(find pointcloud_to_laserscan)/launch/pointcloud_to_laserscan copy.launch"/>
+
+    <!-- 启动tf坐标转换 -->
+    <include file="$(find transformer_tf)/launch/tf_transformer.launch"/>
+
+    <!-- 启动多路速度控制节点 -->
+    <!-- <include file="$(find yocs_cmd_vel_mux)/launch/hunter_cmd_mux.launch"/> -->
+
+    <!--启动3D定位节点 -->
+    <include file="$(find sonic_localization)/launch/localization_0807.launch"/>
+
+    <!-- 启动海康摄像头 -->
+    <include file="$(find hikvision_ros)/launch/hik.launch"/>
+
+    <!-- 启动yolo节点 -->
+    <!-- 等待工控机提交yolo识别代码 -->
+
+    <!-- <include file="$(find yolov8_ros)/launch/yolov8.launch"/>  -->
+
+    <!-- 运行move_base节点 -->
+    <!-- 目前参数较好的 -->
+    <!-- <include file="$(find teb_local_planner_tutorials )/launch/real_car copy.launch" /> -->
+    <include file="$(find teb_local_planner_tutorials )/launch/hunter_car.launch" />
+    
+
+    <!-- 设置一个/map与/odom之间的静态坐标变换 -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map_base_link_broadcaster" args="0 0 0 0 0 0 /map /odom " />
+
+    <!-- rviz在real_car中已经启动 -->
+	<!-- 打开下面两个会导致局部规划失效 -->
+    <!-- 有可能需要打开下面与move_base配合 -->
+    <!-- <node name="path_buffer" pkg="PathBuf" type="pathbuf" output="screen" />
+    <node name="pure_pursuit" pkg="pp" type="ppp" output="log" >
+	<remap from="smart/cmd_vel2" to="twist_command"/>
+    </node> -->
+</launch>

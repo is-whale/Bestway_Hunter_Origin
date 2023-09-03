@@ -12,3 +12,9 @@ logfile
 
 .vscode/c_cpp_properties.json
 .vscode/settings.json
+src/.vscode/c_cpp_properties.json
+.gitignore
+src/.vscode/settings.json
+src/.vscode/task.json
+src/unable/scout_ros.zip
+src/.vscode/c_cpp_properties.json
