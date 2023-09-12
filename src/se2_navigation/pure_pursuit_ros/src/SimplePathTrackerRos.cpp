@@ -18,11 +18,16 @@ namespace pure_pursuit {
 SimplePathTrackerRos::SimplePathTrackerRos(ros::NodeHandle* nh) : BASE(), nh_(nh) {
   initRos();
 }
-
+/**
+ * @brief 初始化节点和发布器
+  */
 void SimplePathTrackerRos::initRos() {
   pathPub_ = nh_->advertise<visualization_msgs::MarkerArray>("simple_path_tracker_ros/path", 1, true);
   robotPosePub_ = nh_->advertise<visualization_msgs::Marker>("simple_path_tracker_ros/robot_pose", 1, true);
 }
+/**
+ * @brief 发布机器人位置
+ */
 void SimplePathTrackerRos::publishRobotPose() const {
   visualization_msgs::Marker robotPose;
 
@@ -37,11 +42,46 @@ void SimplePathTrackerRos::publishRobotPose() const {
 
   robotPosePub_.publish(robotPose);
 }
-
+/**
+ * @brief 发布路径
+ */
 void SimplePathTrackerRos::importCurrentPath(const Path& path) {
   BASE::importCurrentPath(path);
   std::thread t([this]() { publishPath(currentPath_); });
   t.detach();
+}
+/**
+ * @brief 发布路径
+ */
+void SimplePathTrackerRos::publishPath(const Path& path) const {
+  visualization_msgs::MarkerArray msg;
+  int id = 0;
+  double z = 0;
+
+  msg.markers.reserve(path.segment_.size());
+  for (const auto& segment : path.segment_) {
+    visualization_msgs::Marker marker;
+    marker.header.frame_id = "map";
+    marker.ns = "";
+    marker.header.stamp = ros::Time::now();
+    marker.id = id++;
+    const double diameter = 0.2;
+    std::vector<geometry_msgs::Point> points;
+    points.reserve(segment.point_.size());
+    for (const auto& point : segment.point_) {
+      points.push_back(se2_visualization_ros::createPoint(point.position_.x(), point.position_.y(), z));
+    }
+    if (segment.drivingDirection_ == DrivingDirection::FWD) {
+      se2_visualization_ros::drawSphereList(points, 0.8 * se2_visualization_ros::Color::Green(), diameter, &marker);
+    } else {
+      se2_visualization_ros::drawSphereList(points, 0.8 * se2_visualization_ros::Color::Red(), diameter, &marker);
+    }
+
+    msg.markers.push_back(marker);
+    z += 0.2;
+  }
+
+  pathPub_.publish(msg);
 }
 
 void SimplePathTrackerRos::updateCurrentPath(const Path& path) {

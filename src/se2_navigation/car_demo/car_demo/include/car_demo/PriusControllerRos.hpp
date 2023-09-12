@@ -48,6 +48,8 @@ class PriusControllerRos {
 
   void processStartTrackingCommand();
   void processAbortTrackingCommand();
+  //增加cmdvel发布函数
+  void PriusControllerRos::publishCmdvel(const const CurrentStateService::Response& cmd_vel) const;
 
   ros::NodeHandlePtr nh_;
   double dt_ = 0.01;
@@ -57,6 +59,10 @@ class PriusControllerRos {
   ros::ServiceServer priusCurrentStateService_;
   ros::ServiceServer controllerCommandService_;
   nav_msgs::Odometry priusState_;
+
+  //start：cmd_vel数据发送
+  ros::Publisher cmdVelPub_;
+  //end
 
   /*state machine variables*/
   bool planReceived_ = false;

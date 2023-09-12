@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/whale/code/ros/algorithm/PP/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_approach_pose_planning/approach_pose_planner/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_approach_pose_planning/approach_pose_planner_ros/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/car_demo/car_demo/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/car_demo/prius_msgs/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/pure_pursuit_core/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/pure_pursuit_ros/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_grid_map_generator/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_navigation_msgs/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_planning/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_planning_ros/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_planning_rviz/include/**",
+        "/home/whale/code/ros/algorithm/PP/src/se2_navigation/se2_visualization_ros/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

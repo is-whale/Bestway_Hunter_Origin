@@ -185,6 +185,14 @@ void PriusControllerRos::publishControl(const prius_msgs::PriusControl& ctrl) co
   //  ROS_INFO_STREAM_THROTTLE(0.5, "Ros gear: " << (int) rosMsg.shift_gears);
   priusControlPub_.publish(rosMsg);
 }
+/**
+ * @brief 发布cmd_vel
+  */
+void PriusControllerRos::publishCmdvel(const CurrentStateService::Response& cmd_vel) const {
+  const auto msg_vel = CurrentStateService:: ;
+  cmdVelPub_.publish(cmd_vel);
+}
+
 void PriusControllerRos::initRos() {
   // todo remove hardcoded paths
   priusControlPub_ = nh_->advertise<prius_msgs::Control>("/prius_controls", 1, false);
@@ -194,6 +202,7 @@ void PriusControllerRos::initRos() {
   controllerCommandService_ =
       nh_->advertiseService("/prius/controller_command_service", &PriusControllerRos::controllerCommandService, this);
   pathSub_ = nh_->subscribe("/se2_planner_node/ompl_rs_planner_ros/path", 1, &PriusControllerRos::pathCallback, this);
+  cmdVelPub_ = nh_->advertise<geometry_msgs::Twist>("se2_purepursuit/cmd_vel",20);
 }
 
 void convert(se2_navigation_msgs::Path& path, pure_pursuit::Path* out) {

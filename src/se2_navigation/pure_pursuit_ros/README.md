@@ -22,7 +22,7 @@ install the latest version from PPA.
 
 ## Installation
 
-Build with  
+Build with
 `catkin build pure_pursuit_ros`
 
 ## Usage
@@ -31,9 +31,8 @@ To be used inside another project.
 
 ## Topics published
 
-* `pure_pursuit_heading_control/lookahead_point` - visualization of the lookahead point
-* `pure_pursuit_heading_control/anchor_point` - visualization of the anchor point
-* `pure_pursuit_heading_control/path_segment` - path segment the the controller is currently tracking
-* `simple_path_tracker_ros/path` - current path that the tracker has received
-* `simple_path_tracker_ros/robot_pose` - current pose of the robot inside the tracker
-
+* `pure_pursuit_heading_control/lookahead_point` - visualization of the lookahead point 前瞻点的可视化
+* `pure_pursuit_heading_control/anchor_point` - visualization of the anchor point锚点的可视化
+* `pure_pursuit_heading_control/path_segment` - path segment the the controller is currently tracking 控制器当前正在跟踪的路径段
+* `simple_path_tracker_ros/path` - current path that the tracker has received跟踪器接收到的当前路径
+* `simple_path_tracker_ros/robot_pose` - current pose of the robot inside the tracker 跟踪器内机器人的当前姿势
