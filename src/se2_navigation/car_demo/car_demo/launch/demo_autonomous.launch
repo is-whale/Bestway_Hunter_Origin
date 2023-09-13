@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <launch>
+	<!--模型 -->
 	<arg name="model"
 		default="$(find prius_description)/urdf/prius.urdf" />
 	<arg name="rvizconfig"
 		default="$(find car_demo)/rviz/demo_autonomous.rviz" />
 	<arg name="launch_rviz" default="true" />
-
+<!-- ompl planner -->
 	<arg name="ompl_planner_ros_parameter_path"
 		default="$(find car_demo)/config/reeds_shepp_planner_ros.yaml" />
 	<arg name="prius_path_tracker_ros_parameters_filename"
@@ -20,6 +21,7 @@
 		value="$(arg prius_pid_parameters_filename)" />
 	<param name="robot_description" textfile="$(arg model)" />
 
+	<!-- se2 planner -->
 	<include
 		file="$(find se2_planning_ros)/launch/se2_planner.launch">
 		<arg name="launch_rviz" value="false" />
@@ -37,6 +39,7 @@
 		<!-- <remap from="robot_description" to="different_robot_description" /> -->
 		<!-- <remap from="joint_states" to="/prius/joint_states" /> -->
 	</node>
+	
 	<node pkg="fake_localization" type="fake_localization"
 		name="fake_localization">
 		<remap from="base_pose_ground_truth"

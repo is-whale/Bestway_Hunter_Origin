@@ -8,6 +8,7 @@
 #pragma once
 #include <stdexcept>
 #include "prius_msgs/Control.h"
+#include"geometry_msgs/TwistWithCovariance.h" 
 
 namespace prius_msgs {
 
@@ -29,6 +30,16 @@ struct PriusControl {
     return failproofCtrl;
   }
 };
+//结构体PriusCmd_vel 
+struct PriusCmd_vel{
+  
+ inline static geometry_msgs::Twist getFailProofPriusCmd_vel(){
+     geometry_msgs::Twist failproofCmd;
+    failproofCmd.linear.x = 0.0;
+    failproofCmd.angular.x = 0.0;
+    return failproofCmd;} 
+};
+
 
 inline PriusControl convert(const Control& rosMsg) {
   PriusControl ctrlMsg;

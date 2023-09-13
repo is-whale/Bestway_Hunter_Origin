@@ -17,6 +17,7 @@
 #include "pure_pursuit_ros/loaders.hpp"
 #include "se2_navigation_msgs/ControllerCommand.hpp"
 
+#include"geometry_msgs/TwistWithCovarianceStamped.h"
 namespace car_demo {
 
 PriusControllerRos::PriusControllerRos(ros::NodeHandlePtr nh) : nh_(nh) {
@@ -70,6 +71,52 @@ void PriusControllerRos::createPathTrackerAndLoadParameters() {
   if (pathTracker_ == nullptr) {
     throw std::runtime_error("PriusControllerRos:: pathTracker_ is nullptr");
   }
+}
+/**
+ * @brief 发布cmd_vel
+  */
+void PriusControllerRos::publishCmdvel(const CurrentStateService::Response& cmd_vel) const {
+  const auto msg_vel =  cmd_vel->_vel;
+  cmdVelPub_.publish(cmd_vel);
+}
+// 定义 PriusControllerRos 类的成员函数 advance()
+void PriusControllerRos::advance() {
+  // 调用 update() 函数更新控制器状态
+  update();
+  // 判断是否准备好进行路径跟踪
+  const bool readyToTrack = planReceived_ && receivedStartTrackingCommand_;
+  // 如果没有准备好，发布故障保护控制命令并返回
+  if (!readyToTrack) {
+    publishControl(prius_msgs::PriusControl::getFailProofControlCommand());
+    return;
+  }
+
+  // 定义 prius_msgs::PriusControl 类型的 controlCommand 变量
+  prius_msgs::PriusControl controlCommand;
+  geometry_msgs::twist cmd_vel_for_publish;
+  // 尝试让路径跟踪器前进
+  if (!pathTracker_->advance()) {
+    // 如果前进失败，输出错误信息
+    ROS_ERROR_STREAM("Failed to advance path tracker.");
+    // 发布故障保护控制命令
+    controlCommand = prius_msgs::PriusControl::getFailProofControlCommand();
+
+    cmd_vel_for_publish = prius_msgs::PriusControl::getFailProofPriusCmd_vel();
+    // 停止跟踪
+    stopTracking();
+    // 将 publishTrackingStatus_ 设置为 true
+    publishTrackingStatus_ = true;
+  } else {
+    // 如果前进成功，获取转向角度和纵向速度
+    const double steering = pathTracker_->getSteeringAngle();
+    const double velocity = pathTracker_->getLongitudinalVelocity();
+    // 根据速度、转向角度生成控制命令
+    translateCommands(velocity, steering, &controlCommand);
+  }
+
+  // 发布生成的控制命令
+  publishControl(controlCommand);
+ PriusControllerRos::publishCmdvel();
 }
 void PriusControllerRos::advance() {
   update();
@@ -185,13 +232,6 @@ void PriusControllerRos::publishControl(const prius_msgs::PriusControl& ctrl) co
   //  ROS_INFO_STREAM_THROTTLE(0.5, "Ros gear: " << (int) rosMsg.shift_gears);
   priusControlPub_.publish(rosMsg);
 }
-/**
- * @brief 发布cmd_vel
-  */
-void PriusControllerRos::publishCmdvel(const CurrentStateService::Response& cmd_vel) const {
-  const auto msg_vel = CurrentStateService:: ;
-  cmdVelPub_.publish(cmd_vel);
-}
 
 void PriusControllerRos::initRos() {
   // todo remove hardcoded paths
@@ -240,15 +280,12 @@ void PriusControllerRos::pathCallback(const se2_navigation_msgs::PathMsg& pathMs
   }
 
   pure_pursuit::Path path;
-  convert(currentPath_, &path);
+  convert(currentPath_, &path);controlCommand
 
   if (currentlyExecutingPlan_) {
     ROS_WARN_STREAM("PathFollowerRos: Robot is already tracking a plan. Updating the plan.");
     pathTracker_->updateCurrentPath(path);
-  } else {
-    pathTracker_->importCurrentPath(path);
-  }
-
+  } else {controlCommand
   ROS_INFO_STREAM("PathFollowerRos: Subscriber received a new plan, num segments: " << path.segment_.size());
 
   planReceived_ = true;

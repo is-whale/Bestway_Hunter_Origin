@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
   sleep(2.0);
   ros::Rate r(frequency);
   while (ros::ok()) {
+    // 主要功能函数
     controller.advance();
     ros::spinOnce();
     r.sleep();
