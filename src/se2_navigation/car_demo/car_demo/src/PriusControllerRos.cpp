@@ -16,6 +16,8 @@
 #include "pure_pursuit_ros/SimplePathTrackerRos.hpp"
 #include "pure_pursuit_ros/loaders.hpp"
 #include "se2_navigation_msgs/ControllerCommand.hpp"
+#include "geometry_msgs/Twist.h"
+#include "geometry_msgs/TwistStamped.h"
 
 #include"geometry_msgs/TwistWithCovarianceStamped.h"
 namespace car_demo {
@@ -23,6 +25,9 @@ namespace car_demo {
 PriusControllerRos::PriusControllerRos(ros::NodeHandlePtr nh) : nh_(nh) {
   initRos();
 }
+
+// cmd
+
 
 PriusControllerRos::~PriusControllerRos() = default;
 
@@ -123,10 +128,14 @@ void PriusControllerRos::advance() {
   const bool readyToTrack = planReceived_ && receivedStartTrackingCommand_;
   if (!readyToTrack) {
     publishControl(prius_msgs::PriusControl::getFailProofControlCommand());
+    publishCmdvel(0.0,0.0);//同步异常处理
     return;
   }
 
   prius_msgs::PriusControl controlCommand;
+  double lin_x_pub = 0;
+  double ang_z_pub = 0;
+  // pure_pursuit::RobotState::twist_ controlCmd_Data;
   if (!pathTracker_->advance()) {
     ROS_ERROR_STREAM("Failed to advance path tracker.");
     controlCommand = prius_msgs::PriusControl::getFailProofControlCommand();
@@ -135,22 +144,27 @@ void PriusControllerRos::advance() {
   } else {
     const double steering = pathTracker_->getSteeringAngle();
     const double velocity = pathTracker_->getLongitudinalVelocity();
+    // controlCmd_Data = pathTracker_->currentRobotState_.twist_;
     translateCommands(velocity, steering, &controlCommand);
+    lin_x_pub = velocity;
+    ang_z_pub = steering;
   }
 
   publishControl(controlCommand);
+  publishCmdvel(lin_x_pub, ang_z_pub);
 }
 void PriusControllerRos::update() {
   const double x = priusState_.pose.pose.position.x;
   const double y = priusState_.pose.pose.position.y;
   const double yaw = tf::getYaw(priusState_.pose.pose.orientation);
   pure_pursuit::RobotState currentState;
+  //当前状态以路点存储
   currentState.pose_.position_ = pure_pursuit::Point(x, y);
   currentState.pose_.yaw_ = yaw;
   pathTracker_->updateRobotState(currentState);
 
   // update FSM state variables
-  const bool doneFollowing = pathTracker_->isTrackingFinished();
+  const bool doneFollowing = pathTracker_->isTrackingFinished();///是否结束
   const bool isRisingEdge = doneFollowing && !doneFollowingPrev_;
   if (isRisingEdge) {
     ROS_WARN_STREAM("Tracking finished automatically: Goal state reached!");
@@ -232,9 +246,24 @@ void PriusControllerRos::publishControl(const prius_msgs::PriusControl& ctrl) co
   //  ROS_INFO_STREAM_THROTTLE(0.5, "Ros gear: " << (int) rosMsg.shift_gears);
   priusControlPub_.publish(rosMsg);
 }
+/**
+ * @brief 发布cmd_vel
+  */
+void PriusControllerRos::publishCmdvel(const double linear_x,const double angular_z) const {
+  // //const auto msg_vel = CurrentStateService::Response& cmd_vel;
+  geometry_msgs::Twist cmd_vel_msg;
+  cmd_vel_msg.linear.x = linear_x;
+  cmd_vel_msg.angular.z = angular_z;
+  cmd_vel_msg.linear.y = 0.0;
+  cmd_vel_msg.linear.z = 0.0;
+  cmd_vel_msg.angular.x = 0.0;
+  cmd_vel_msg.angular.y = 0.0;
+  cmdVelPub_.publish(cmd_vel_msg);
+}
 
 void PriusControllerRos::initRos() {
   // todo remove hardcoded paths
+  // priusControlPub_ = nh_->advertise<prius_msgs::Control>("/prius_controls", 1, false);
   priusControlPub_ = nh_->advertise<prius_msgs::Control>("/prius_controls", 1, false);
   priusStateSub_ = nh_->subscribe("/prius/base_pose_ground_truth", 1, &PriusControllerRos::priusStateCallback, this);
   priusCurrentStateService_ =
@@ -242,7 +271,7 @@ void PriusControllerRos::initRos() {
   controllerCommandService_ =
       nh_->advertiseService("/prius/controller_command_service", &PriusControllerRos::controllerCommandService, this);
   pathSub_ = nh_->subscribe("/se2_planner_node/ompl_rs_planner_ros/path", 1, &PriusControllerRos::pathCallback, this);
-  cmdVelPub_ = nh_->advertise<geometry_msgs::Twist>("se2_purepursuit/cmd_vel",20);
+  cmdVelPub_ = nh_->advertise<geometry_msgs::Twist>("/cmd_vel",1,false);
 }
 
 void convert(se2_navigation_msgs::Path& path, pure_pursuit::Path* out) {

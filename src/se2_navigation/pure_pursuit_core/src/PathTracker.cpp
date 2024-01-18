@@ -44,6 +44,11 @@ double PathTracker::getSteeringAngle() const {
 double PathTracker::getLongitudinalVelocity() const {
   return longitudinalVelocity_;
 }
+/// @brief 原计划直接传递
+
+// RobotTwist get_Cmd_Vel_Angular() const{
+//   return currentRobotState_.twist_;
+// }
 
 void PathTracker::importCurrentPath(const Path& path) {
   if (path.segment_.empty()) {

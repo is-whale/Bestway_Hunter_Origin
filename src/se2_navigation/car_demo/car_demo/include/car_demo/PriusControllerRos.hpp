@@ -49,7 +49,8 @@ class PriusControllerRos {
   void processStartTrackingCommand();
   void processAbortTrackingCommand();
   //增加cmdvel发布函数
-  void PriusControllerRos::publishCmdvel(const const CurrentStateService::Response& cmd_vel) const;
+  // void publishCmdvel(const CurrentStateService::Response& cmd_vel) const;
+  void publishCmdvel(const double linear_x,const double angalar_z) const;
 
   ros::NodeHandlePtr nh_;
   double dt_ = 0.01;

@@ -27,6 +27,9 @@ class PathTracker {
   double getYawRate() const;
   double getSteeringAngle() const;
   double getLongitudinalVelocity() const;
+//add cmd_vel_linear
+  // RobotTwist get_Cmd_Vel_Angular() const;
+
   bool isTrackingFinished() const;
 
   void setHeadingController(std::shared_ptr<HeadingController> ctrl);
