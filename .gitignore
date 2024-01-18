@@ -16,3 +16,11 @@ src/.vscode/setting.json
 src/unable/scout_ros.zip
 src/.vscode/c_cpp_properties.json
 .catkin_tools/
+src/.vscode/settings.json
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/buffer_client.cpython-38.pyc
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/buffer_interface.cpython-38.pyc
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/buffer.cpython-38.pyc
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/static_transform_broadcaster.cpython-38.pyc
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/transform_broadcaster.cpython-38.pyc
+src/unable/geometry2-melodic-devel/tf2_ros/src/tf2_ros/__pycache__/transform_listener.cpython-38.pyc
+src/.vscode/settings.json
